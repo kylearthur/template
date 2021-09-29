@@ -100,7 +100,7 @@ router.post('/logout', auth, async (req, res) => {
 
 
 
-router.get('/search', auth, async (req, res) => {
+router.get('/registered_list', auth, async (req, res) => {
     let lim = parseInt(req.query.limit) 
     let page = parseInt(req.query.page)
     let pg = (lim * page) - lim
