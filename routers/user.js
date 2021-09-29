@@ -87,11 +87,6 @@ router.post('/login' ,async (req, res) => {
 })
 
 
-
-
-
-
-
 router.post('/logout', auth, async (req, res) => {
     try {
         req.user.tokens = []
@@ -110,20 +105,20 @@ router.get('/search', auth, async (req, res) => {
     let page = parseInt(req.query.page)
     let pg = (lim * page) - lim
     let u_id = req.query.u_id
-    let email = req.query.email
+    let user_name = req.query.user_name
 
-    console.log(req.query.email)
-    if (!req.query.email ){
-        req.query.email = ""
-     }else if( req.query.email === 'all'){
-        req.query.email = ""
+    console.log(user_name)
+    if (!user_name ){
+        user_name = ""
+     }else if( user_name === 'all'){
+        user_name = ""
      }
 
 
-    if (req.query.email !== ""){ 
+    if (user_name !== ""){ 
         console.log("f_id != null")
 
-                    let user = await User.find({email})
+                    let user = await User.find({user_name})
 
                 try{
                     let status = user.length >= 1 ?true : false
