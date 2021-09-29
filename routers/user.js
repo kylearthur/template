@@ -320,7 +320,7 @@ router.post('/users/ako_assist',  async (req, res) => {
                 //res.send(docs)    
             } 
         });
-        let success_response = ({ message: "this is you automated password",  status: true , data: {temp_pass}})
+        let success_response = ({ message: "this is you automated password please change it to a secured one",  status: true , data: {temp_pass}})
         res.status(200).send(success_response)
     }catch (e){
         let err_response = ({ message : { error : "invalid email"} ,status: false},{   data : ""})
