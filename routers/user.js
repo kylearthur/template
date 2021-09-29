@@ -96,7 +96,6 @@ router.post('/logout', auth, async (req, res) => {
     try {
         req.user.tokens = []
         await req.user.save()
-        sendCancelationEmail(req.user.email)
         let success_response = ({ message: "success"})
         res.send(success_response)
     } catch (e) {
