@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 
-const CoinsinSchema = mongoose.Schema({
+const CashinSchema = mongoose.Schema({
 
     u_id: {
         type: mongoose.Schema.Types.ObjectId,
@@ -33,16 +33,7 @@ const CoinsinSchema = mongoose.Schema({
     date_attended_string : {
         type: String
     },
-    mobile_number : {
-        type : Number
-    },
     user_name : {
-        type : String
-    },
-    my_master_agent_email : {
-        type : String
-    },
-    my_agent_email : {
         type : String
     },
     gcash : {
@@ -51,6 +42,6 @@ const CoinsinSchema = mongoose.Schema({
   
 })
 
-const Coinsin = mongoose.model('Coinsin',CoinsinSchema )
+const Cashin = mongoose.model('Cashin',CashinSchema )
 
-module.exports = Coinsin
+module.exports = Cashin

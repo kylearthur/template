@@ -13,11 +13,7 @@ router.post('/register', async (req, res) => {
     let ts = Math.round(Date.now() / 1000);
         let u_email = body.email
         let u_name = body.user_name
-        let u_mobile = body.mobile_number
-
-
         let may_email = await User.findOne({email : u_email})
-
         let may_name = await User.findOne({user_name : u_name})
 
 
@@ -71,7 +67,6 @@ router.post('/register', async (req, res) => {
     } catch (e) {
         let err_response = ({ message : { error : "email has been already taken"} ,status: false, data : ""} )
          res.status(200).send(err_response)  
-    // res.status(400).send(e)
 }
 })
 
@@ -86,7 +81,6 @@ router.post('/login' ,async (req, res) => {
         } catch (e) {
             let err_response = ({ message : { error : "user name and password doesn`t match "} ,status: false,   data : ""})
             res.status(200).send(err_response)
-            // res.status(400).send(e)
         }
     
    
@@ -212,27 +206,17 @@ router.post('/forgot_pass',  async (req, res) => {
     const email = req.query.email
     const temp_pass = makeid(8)
     const temp_pass2 = await bcrypt.hash(temp_pass, 8)
-    // sendForgotpass(find_user.email)
-    
-
     const find_user = await User.find({email}).exec() 
-    console.log(find_user)
-
     const u_id = find_user._id
-
-    
-
-
     try{
         const ua = await User.findOneAndUpdate({u_id},  
             {password: temp_pass2}, null, function (err, docs) { 
             if (err){ 
-                console.log(err) 
-               // res.status(400).send()
+               
+             
             } 
             else{ 
-                console.log("Original Doc : ",docs)
-                //res.send(docs)    
+              
             } 
         });
         let success_response = ({ message: "this is you automated password please change it to a secured one",  status: true , data: {temp_pass}})
@@ -246,14 +230,14 @@ router.post('/forgot_pass',  async (req, res) => {
 
 
 function makeid(length) {
-    var result           = '';
-    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    var charactersLength = characters.length;
-    for ( var i = 0; i < length; i++ ) {
-      result += characters.charAt(Math.floor(Math.random() * 
- charactersLength));
-   }
-   return result;
+        var result           = '';
+        var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for ( var i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * 
+         charactersLength));
+          }
+          return result;
 }
 
 

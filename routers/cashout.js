@@ -1,8 +1,7 @@
 const express = require('express')
-const Coinsout = require('../models/cashout')
+const Cashout = require('../models/cashout')
 const Cash = require('../models/cash')
 const auth = require('../middleware/auth')
-const Coins = require('../models/cash')
 const router = new express.Router()
 
 router.post('/cashout', auth, async (req, res) => {
@@ -11,7 +10,7 @@ router.post('/cashout', auth, async (req, res) => {
     value = body.amount
     let user_id = body.u_id
  
-    const user_cash = await Coins.findOne({u_id : user_id})
+    const user_cash = await Cash.findOne({u_id : user_id})
     console.log('user_cash',user_cash.amount)
     if(user_cash.amount < 1){
 
@@ -28,13 +27,13 @@ router.post('/cashout', auth, async (req, res) => {
     
   
 
-    const c = await Coins.findOne({u_id})
+    const c = await Cash.findOne({u_id})
     console.log(c)
 
     let total = c.amount - value; 
 
 
-    const c2 = await Coins.findOneAndUpdate({u_id},  
+    const c2 = await Cash.findOneAndUpdate({u_id},  
         {amount: total}, null, function (err, docs) { 
         if (err){ 
             console.log(err) 
@@ -49,7 +48,7 @@ router.post('/cashout', auth, async (req, res) => {
     
     
 
-    // const coinsout = new Coinsout(info)
+    // const Cashout = new Cashout(info)
     let ts = Math.round(Date.now() / 1000);
     
     const info = {
@@ -65,10 +64,10 @@ router.post('/cashout', auth, async (req, res) => {
         "u_date_cashout_string": new Date(ts * 1000)
     }
 
- const coinsout = new Coinsout(info)
+ const Cashout = new Cashout(info)
     try {
-        await coinsout.save()
-        let success_response = ({ message: "success",  status: true , data: {coinsout}})
+        await Cashout.save()
+        let success_response = ({ message: "success",  status: true , data: {Cashout}})
         res.status(201).send(success_response)
     } catch (e) {
         let err_response = ({ message : { error : "please fill the required field"} ,status: false, data : ""} )
@@ -78,79 +77,7 @@ router.post('/cashout', auth, async (req, res) => {
 
 
 
-router.get('/cashout_list_for_master', async (req, res) => {
-    let lim = parseInt(req.query.limit) 
-    let page = parseInt(req.query.page)
-    let pg = (lim * page) - lim
-    let u_id = req.query.u_id
-    let srt;
-    let my_master_agent_email = req.query.my_master_agent_email
-    if(req.query.sort == "desc"){
-        srt = -1
-    }else{
-        srt = parseInt(req.query.sort)
-    }
-    let sortBy = req.query.sortBy
-    let sorter = null
 
-    if(sortBy == "u_date_cashout"){
-        sorter = {'u_date_cashout': srt}
-    } else{
-        sorter = {}
-    }
-
-
-    try {
-       const result = await Coinsout.find({ my_master_agent_email
-
-        }).skip(pg).sort(sorter).limit(lim).exec()
-       
-
-        let success_response = ({ message: "found",  status: true , data: {result}})
-        res.status(200).send(success_response)
-    } catch (e){
-        let err_response = ({ message : { error : "no result"} ,status: false, data : ""} )
-        res.status(200).send(err_response)  
-    }
-})
-
-
-
-router.get('/cashout_list_for_agent', async (req, res) => {
-    let lim = parseInt(req.query.limit) 
-    let page = parseInt(req.query.page)
-    let pg = (lim * page) - lim
-    let u_id = req.query.u_id
-    let srt;
-    let my_agent_email = req.query.my_agent_email
-    if(req.query.sort == "desc"){
-        srt = -1
-    }else{
-        srt = parseInt(req.query.sort)
-    }
-    let sortBy = req.query.sortBy
-    let sorter = null
-
-    if(sortBy == "u_date_cashout"){
-        sorter = {'u_date_cashout': srt}
-    } else{
-        sorter = {}
-    }
-
-
-    try {
-       const result = await Coinsout.find({ my_agent_email
-
-        }).skip(pg).sort(sorter).limit(lim).exec()
-       
-
-        let success_response = ({ message: "found",  status: true , data: {result}})
-        res.status(200).send(success_response)
-    } catch (e){
-        let err_response = ({ message : { error : "no result"} ,status: false, data : ""} )
-        res.status(200).send(err_response)  
-    }
-})
 
 
 
@@ -176,7 +103,7 @@ router.get('/cashout_list_admin', async (req, res) => {
 
 
     try {
-       const result = await Coinsout.find({   
+       const result = await Cashout.find({   
 
         }).skip(pg).sort(sorter).limit(lim).exec()
        

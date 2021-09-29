@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const Coinsout = mongoose.model('Coinsout', {
+const Cashout = mongoose.model('Cashout', {
     amount: {
         type: Number
         
@@ -30,20 +30,10 @@ const Coinsout = mongoose.model('Coinsout', {
     date_attended_string : {
             type: String
         }  ,
-        my_master_agent_email:{
-            type: String,
-       
-        }
-        ,
-        my_agent_email:{
-            type: String,
-        
-        }
-        ,
         user_name:{
             type: String,
             
         }
 })
 
-module.exports = Coinsout
+module.exports = Cashout

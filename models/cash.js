@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const Coins = mongoose.model('Coins', {
+const Cash = mongoose.model('Cash', {
     amount: {
         type: Number,
         required: true,
@@ -13,8 +13,6 @@ const Coins = mongoose.model('Coins', {
     user_name: {
         type: String
      
-    },mobile_number: {
-        type: String
     },
     u_id: {
         unique: true,
@@ -25,4 +23,4 @@ const Coins = mongoose.model('Coins', {
     }
 })
 
-module.exports = Coins
+module.exports = Cash
