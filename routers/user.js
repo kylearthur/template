@@ -1,17 +1,10 @@
 const express = require('express')
 const User = require('../models/user')
-const User_level = require('../models/u_level')
-const Payin = require('../models/payin')
 const multer = require('multer')
- // const sharp = require('sharp')
-
 const bcrypt = require('bcryptjs')
 const Coins = require('../models/cash')
 const auth = require('../middleware/auth')
 const { off } = require('../models/user')
-const Useractive = require('../models/useractive')
-const Cashv2 = require('../models/cash2')
-const User_profile = require('../models/user_profile')
 const router = new express.Router()
 
 
@@ -55,13 +48,7 @@ router.post('/users', async (req, res) => {
     const userInfo = {
         "email":body.email,
         "user_name":body.user_name,
-        "country":body.country,
-        "dial_code":body.dial_code,
         "password":body.password,
-        "mobile_number":body.mobile_number,
-        "complete_address" : body.complete_address,  
-        "bank_acc" : body.bank_acc, 
-        "fb" : body.fb,
         "age":body.age,
         "u_date_registered": ts,
         "u_date_registered_string": new Date(ts * 1000)
@@ -71,90 +58,23 @@ router.post('/users', async (req, res) => {
     
   
     
-    await user.save()
-
+   
     const coinsInfo = {
         u_id: user.id,
         amount: 0,
         email :user.email,
-        user_name:user.user_name,
-        mobile_number: user.mobile_number
-
-    }
-    const coins = new Coins(coinsInfo)
-
-    const cashInfov2 = {
-        u_id: user.id,
-        amountwo: 0,
-        email :user.email,
-        user_name:user.user_name,
-        mobile_number: user.mobile_number
-
-    }
-    const cash2 = new Cashv2(cashInfov2)
-
-    const uzer_level = {
-        my_master_agent_email,
-        my_agent_email,
-        email,
-        u_level,
-        u_id: user.id,
-        mobile_number: user.mobile_number ,
-        amount: coins.amount ,
-        "date": ts,
-        "date_string": new Date(ts * 1000),
         user_name:user.user_name
+
     }
+    const cash = new Coins(coinsInfo)
 
-    console.log(user.mobile_number)
-
-    
-   
-
-    const user_level = new User_level(uzer_level)
-
-    const user_profile = {
-        "u_id" : user.u_id,
-        "mobile_number" : user.mobile_number,
-        "user_name" : user.user_name,
-        "complete_address" : user.complete_address,  
-        "bank_acc" : user.bank_acc, 
-        "fb" : user.fb,
-        "date": ts,
-        "date_string": new Date(ts * 1000)
-    }
-
-    const profile = new User_profile(user_profile)
-
-
-    let transporter = nodemailer.createTransport({
-        host: "mail.happymedadmin.com",
-        port: 465,
-        secure: true, // true for 465, false for other ports
-        auth: {
-          user: "no-reply@happymedadmin.com", // generated ethereal user
-          pass: "bgEV{wbzn+3Q", // generated ethereal password
-        },
-      });
-    
-      // send mail with defined transport object
-      let info = await transporter.sendMail({
-        from: '"isokraft" <isokraft@gmail.com>', // sender address
-        to: user.email, // list of receivers
-        subject: "UCfC", // Subject line
-        text: "thanks for joining in", // plain text body
-       
-      });
-    
 
 
     try {
-        await profile.save()
-        await coins.save()
-        await cash2.save()
-        await user_level.save()
+        await user.save()
+        await cash.save()
         const token = await user.generateAuthToken()    
-        let success_response = ({ message: "user creater",  status: true , data: {user, token , coins , cash2, user_level ,profile}})
+        let success_response = ({ message: "user creater",  status: true , data: {user, token , cash }})
         res.status(201).send(success_response)
     } catch (e) {
         let err_response = ({ message : { error : "email has been already taken"} ,status: false, data : ""} )
