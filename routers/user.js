@@ -68,43 +68,11 @@ router.post('/users', async (req, res) => {
     }
     const user = new User(userInfo)
   
-    let my_master_agent_email = ''
-    let my_agent_email = ''
-    let u_level = ''
-    let email = body.email
-
-   
-    if(body.type === 'agent'){
-     my_master_agent_email = body.extra_email
-     my_agent_email = ''
-     u_level = 'agent'
-    } else if(body.type === 'player'){
-        
-        if(body.extra_email !== "null" ){
-
-                
-                 const ma = await User_level.findOne({email : body.extra_email})
-                  my_master_agent_email = ma.my_master_agent_email
-                  my_agent_email = body.extra_email
-                u_level = 'player'
-            }else{
-
-                my_master_agent_email = 'isokraft@gmail.com'
-                my_agent_email = 'contact@artpologabriel.com'
-                u_level = 'player'
-            }
-    } else {
-
-                my_master_agent_email = 'isokraft@gmail.com'
-                my_agent_email = 'contact@artpologabriel.com'
-                u_level = 'player'
-    }
+    
   
     
     await user.save()
-    
-    sendWelcomeEmail(user.email)
-   
+
     const coinsInfo = {
         u_id: user.id,
         amount: 0,
