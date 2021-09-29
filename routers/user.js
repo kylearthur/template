@@ -77,25 +77,11 @@ router.post('/users', async (req, res) => {
 
 
 
-router.post('/users/login' ,async (req, res) => {
-
-    let user_name = req.body.user_name
-    const user_level = await User_level.findOne({user_name : req.body.user_name}).exec()
-    console.log("u",user_level)
-    if(user_level.active === "deactivated"){
-        let err_response = ({ message : { error : "your account has been deactivated"} ,status: false,   data : ""})
-        res.status(200).send(err_response)
-            return
-    }
-
+router.post('/login' ,async (req, res) => {
         try {
             const user = await User.findByCredentials(req.body.user_name, req.body.password)
-            const token = await user.generateAuthToken()
-            const user_name = req.body.user_name
-            const u_id = user._id
-            const useractive = await Useractive.findOne({ u_id: user._id}).exec()
-            
-            let success_response = ({ message: "success",  status: true , data: {user, token , user_level }})
+            const token = await user.generateAuthToken()        
+            let success_response = ({ message: "success",  status: true , data: {user, token}})
             res.send(success_response)
         } catch (e) {
             let err_response = ({ message : { error : "user name and password doesn`t match "} ,status: false,   data : ""})
