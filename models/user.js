@@ -28,25 +28,7 @@ const userSchema = new mongoose.Schema({
             }
         }
     },
-    mobile_number: {
-        type : Number,
-        required: true,
-        unique: true,
-        minlength: 10
-    },
-    complete_address: {
-        type: String,
-        
-    },
-    
-    bank_acc: {
-        type: String,
-       
-    },
-    fb: {
-        type: String,
-       
-    },
+
 
     user_name: {
         type : String,
@@ -55,15 +37,6 @@ const userSchema = new mongoose.Schema({
         minlength: 2
     },
     
-    dial_code: {
-        type : String,
-        required: true
-    },
-    country: {
-        type : String,
-        required: true
-    },
-
     age:{
         type : Number,
         required: true,

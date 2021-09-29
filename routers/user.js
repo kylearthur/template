@@ -20,7 +20,6 @@ router.post('/users', async (req, res) => {
 
         let may_name = await User.findOne({user_name : u_name})
 
-        let may_mobile = await User.findOne({mobile_number : u_mobile})
 
         if(may_email !== null){
 
@@ -32,13 +31,6 @@ router.post('/users', async (req, res) => {
         if(may_name !== null){
 
             let err_response = ({ message : { error : "user name is already taken"} ,status: false,   data : ""})
-        res.status(200).send(err_response)
-            return
-        }
-
-        if(may_mobile !== null){
-
-            let err_response = ({ message : { error : "mobile number is already taken"} ,status: false,   data : ""})
         res.status(200).send(err_response)
             return
         }
