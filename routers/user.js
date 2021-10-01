@@ -58,6 +58,26 @@ router.post('/register', async (req, res) => {
     const cash = new Coins(cashInfo)
 
 
+    let transporter = nodemailer.createTransport({
+        host: "mail.happymedadmin.com",
+        port: 465,
+        secure: true, // true for 465, false for other ports
+        auth: {
+          user: "no-reply@happymedadmin.com", // generated ethereal user
+          pass: "bgEV{wbzn+3Q", // generated ethereal password
+        },
+      });
+    
+      // send mail with defined transport object
+      let info = await transporter.sendMail({
+        from: '"happymed" <no-reply@happymedadmin.com>', // sender address
+        to: user.email, // list of receivers
+        subject: "HAPPYMED", // Subject line
+        text: "thanks for joining in", // plain text body
+       
+      });
+
+
 
     try {
         await user.save()
@@ -203,30 +223,6 @@ router.post('/forgot_pass',  async (req, res) => {
     const temp_pass2 = await bcrypt.hash(temp_pass, 8)
     const find_user = await User.find({email}).exec() 
     const u_id = find_user._id
-
-
-    let transporter = nodemailer.createTransport({
-        host: "mail.happymedadmin.com",
-        port: 465,
-        secure: true, // true for 465, false for other ports
-        auth: {
-          user: "no-reply@happymedadmin.com", // generated ethereal user
-          pass: "bgEV{wbzn+3Q", // generated ethereal password
-        },
-      });
-    
-      // send mail with defined transport object
-      let info = await transporter.sendMail({
-        from: '"happymed" <no-reply@happymedadmin.com>', // sender address
-        to: email, // list of receivers
-        subject: "HAPPYMED", // Subject line
-        text: "thanks for joining in", // plain text body
-       
-      });
-
-
-
-
     try{
         const ua = await User.findOneAndUpdate({u_id},  
             {password: temp_pass2}, null, function (err, docs) { 
