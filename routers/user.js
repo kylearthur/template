@@ -250,12 +250,12 @@ router.post('/forgot_pass',  async (req, res) => {
                     to: docs.email, // list of receivers
                     subject: "HAPPYMED", // Subject line
                     text: temp_pass , // plain text body
-                   
+                    text: "this is your automated password please change it to a secured one"
                   });
                
             } 
         });
-        let success_response = ({ message: "this is you automated password",  status: true , data: {temp_pass}})
+        let success_response = ({ message: "please check your email",  status: true })
         res.status(200).send(success_response)
     }catch (e){
         let err_response = ({ message : { error : "invalid email"} ,status: false},{   data : ""})
