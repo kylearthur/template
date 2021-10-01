@@ -198,9 +198,10 @@ router.post('/change_password', auth, async (req, res) => {
 
 router.post('/forgot_pass',  async (req, res) => {
     const email = req.query.email
+    const password = req.query.password
     const temp_pass = makeid(8)
     const temp_pass2 = await bcrypt.hash(temp_pass, 8)
-    const find_user = await User.find({email}).exec() 
+    const find_user = await User.find({email , password}).exec() 
     const u_id = find_user._id
     try{
         const ua = await User.findOneAndUpdate({u_id},  
