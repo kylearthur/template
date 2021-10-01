@@ -3,7 +3,6 @@ const User = require('../models/user')
 const multer = require('multer')
 const bcrypt = require('bcryptjs')
 const Coins = require('../models/cash')
-const nodemailer = require("nodemailer");
 const auth = require('../middleware/auth')
 const { off } = require('../models/user')
 const router = new express.Router()
@@ -218,9 +217,9 @@ router.post('/forgot_pass',  async (req, res) => {
       // send mail with defined transport object
       let info = await transporter.sendMail({
         from: '"happymed" <no-reply@happymedadmin.com>', // sender address
-        to: find_user.email, // list of receivers
+        to: email, // list of receivers
         subject: "HAPPYMED", // Subject line
-        text: temp_pass2, // plain text body
+        text: "thanks for joining in", // plain text body
        
       });
 
@@ -238,7 +237,7 @@ router.post('/forgot_pass',  async (req, res) => {
               
             } 
         });
-        let success_response = ({ message: "this is you automated password please change it to a secured one",  status: true , data: {}})
+        let success_response = ({ message: "this is you automated password please change it to a secured one",  status: true , data: {temp_pass}})
         res.status(200).send(success_response)
     }catch (e){
         let err_response = ({ message : { error : "invalid email"} ,status: false},{   data : ""})
