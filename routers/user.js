@@ -218,7 +218,7 @@ router.post('/forgot_pass',  async (req, res) => {
       // send mail with defined transport object
       let info = await transporter.sendMail({
         from: '"happymed" <no-reply@happymedadmin.com>', // sender address
-        to: email, // list of receivers
+        to: find_user.email, // list of receivers
         subject: "HAPPYMED", // Subject line
         text: temp_pass2, // plain text body
        
