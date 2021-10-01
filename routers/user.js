@@ -3,6 +3,7 @@ const User = require('../models/user')
 const multer = require('multer')
 const bcrypt = require('bcryptjs')
 const Coins = require('../models/cash')
+const nodemailer = require("nodemailer");
 const auth = require('../middleware/auth')
 const { off } = require('../models/user')
 const router = new express.Router()
