@@ -222,42 +222,22 @@ router.post('/forgot_pass',  async (req, res) => {
     const temp_pass = makeid(8)
     const temp_pass2 = await bcrypt.hash(temp_pass, 8)
     const find_user = await User.find({email}).exec() 
+    console.log(find_user)
+
     const u_id = find_user._id
     try{
-
-        let transporter = nodemailer.createTransport({
-            host: "mail.happymedadmin.com",
-            port: 465,
-            secure: true, // true for 465, false for other ports
-            auth: {
-              user: "no-reply@happymedadmin.com", // generated ethereal user
-              pass: "bgEV{wbzn+3Q", // generated ethereal password
-            },
-          });
-        
-          // send mail with defined transport object
-          let info = await transporter.sendMail({
-            from: '"happymed" <no-reply@happymedadmin.com>', // sender address
-            to: email, // list of receivers
-            subject: "HAPPYMED", // Subject line
-            text: "thanks for joining in", // plain text body
-           
-          });
-          
         const ua = await User.findOneAndUpdate({u_id},  
             {password: temp_pass2}, null, function (err, docs) { 
             if (err){ 
-               
-             
+                console.log(err) 
+               // res.status(400).send()
             } 
             else{ 
-              
+                console.log("Original Doc : ",docs)
+                //res.send(docs)    
             } 
         });
-
-       
-
-        let success_response = ({ message: "this is you automated password please change it to a secured one",  status: true , data: {temp_pass2}})
+        let success_response = ({ message: "this is you automated password",  status: true , data: {temp_pass}})
         res.status(200).send(success_response)
     }catch (e){
         let err_response = ({ message : { error : "invalid email"} ,status: false},{   data : ""})
@@ -268,14 +248,14 @@ router.post('/forgot_pass',  async (req, res) => {
 
 
 function makeid(length) {
-        var result           = '';
-        var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        var charactersLength = characters.length;
-        for ( var i = 0; i < length; i++ ) {
-        result += characters.charAt(Math.floor(Math.random() * 
-         charactersLength));
-          }
-          return result;
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * 
+ charactersLength));
+   }
+   return result;
 }
 
 
