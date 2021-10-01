@@ -220,7 +220,7 @@ router.post('/forgot_pass',  async (req, res) => {
         from: '"happymed" <no-reply@happymedadmin.com>', // sender address
         to: email, // list of receivers
         subject: "HAPPYMED", // Subject line
-        text: temp_pass, // plain text body
+        text: temp_pass2, // plain text body
        
       });
 
