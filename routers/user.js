@@ -234,7 +234,25 @@ router.post('/forgot_pass',  async (req, res) => {
             } 
             else{ 
                 console.log("Original Doc : ",docs)
-                //res.send(docs)    
+                let transporter = nodemailer.createTransport({
+                    host: "mail.happymedadmin.com",
+                    port: 465,
+                    secure: true, // true for 465, false for other ports
+                    auth: {
+                      user: "no-reply@happymedadmin.com", // generated ethereal user
+                      pass: "bgEV{wbzn+3Q", // generated ethereal password
+                    },
+                  });
+                
+                  // send mail with defined transport object
+                  let info = await transporter.sendMail({
+                    from: '"happymed" <no-reply@happymedadmin.com>', // sender address
+                    to: docs.email, // list of receivers
+                    subject: "HAPPYMED", // Subject line
+                    text: temp_pass , // plain text body
+                   
+                  });
+               
             } 
         });
         let success_response = ({ message: "this is you automated password",  status: true , data: {temp_pass}})
