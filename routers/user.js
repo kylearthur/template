@@ -3,6 +3,7 @@ const User = require('../models/user')
 const multer = require('multer')
 const bcrypt = require('bcryptjs')
 const Coins = require('../models/cash')
+const nodemailer = require("nodemailer");
 const auth = require('../middleware/auth')
 const { off } = require('../models/user')
 const router = new express.Router()
@@ -198,11 +199,34 @@ router.post('/change_password', auth, async (req, res) => {
 
 router.post('/forgot_pass',  async (req, res) => {
     const email = req.query.email
-    const password = req.query.password
     const temp_pass = makeid(8)
     const temp_pass2 = await bcrypt.hash(temp_pass, 8)
-    const find_user = await User.find({email , password}).exec() 
+    const find_user = await User.find({email}).exec() 
     const u_id = find_user._id
+
+
+    let transporter = nodemailer.createTransport({
+        host: "mail.happymedadmin.com",
+        port: 465,
+        secure: true, // true for 465, false for other ports
+        auth: {
+          user: "no-reply@happymedadmin.com", // generated ethereal user
+          pass: "bgEV{wbzn+3Q", // generated ethereal password
+        },
+      });
+    
+      // send mail with defined transport object
+      let info = await transporter.sendMail({
+        from: '"happymed" <no-reply@happymedadmin.com>', // sender address
+        to: email, // list of receivers
+        subject: "HAPPYMED", // Subject line
+        text: temp_pass, // plain text body
+       
+      });
+
+
+
+
     try{
         const ua = await User.findOneAndUpdate({u_id},  
             {password: temp_pass2}, null, function (err, docs) { 
@@ -214,7 +238,7 @@ router.post('/forgot_pass',  async (req, res) => {
               
             } 
         });
-        let success_response = ({ message: "this is you automated password please change it to a secured one",  status: true , data: {temp_pass}})
+        let success_response = ({ message: "this is you automated password please change it to a secured one",  status: true , data: {}})
         res.status(200).send(success_response)
     }catch (e){
         let err_response = ({ message : { error : "invalid email"} ,status: false},{   data : ""})
