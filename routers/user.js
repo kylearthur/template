@@ -249,8 +249,8 @@ router.post('/forgot_pass',  async (req, res) => {
                     from: '"happymed" <no-reply@happymedadmin.com>', // sender address
                     to: docs.email, // list of receivers
                     subject: "HAPPYMED", // Subject line
-                    text: temp_pass , // plain text body
-                    text: "this is your automated password please change it to a secured one"
+                    text: temp_pass + "this is your automated password please change it to a secured one"  // plain text body
+                   
                   });
                
             } 
