@@ -224,16 +224,6 @@ router.post('/forgot_pass',  async (req, res) => {
     const find_user = await User.find({email}).exec() 
     const u_id = find_user._id
     try{
-        const ua = await User.findOneAndUpdate({u_id},  
-            {password: temp_pass2}, null, function (err, docs) { 
-            if (err){ 
-               
-             
-            } 
-            else{ 
-              
-            } 
-        });
 
         let transporter = nodemailer.createTransport({
             host: "mail.happymedadmin.com",
@@ -253,8 +243,21 @@ router.post('/forgot_pass',  async (req, res) => {
             text: "thanks for joining in", // plain text body
            
           });
+          
+        const ua = await User.findOneAndUpdate({u_id},  
+            {password: temp_pass2}, null, function (err, docs) { 
+            if (err){ 
+               
+             
+            } 
+            else{ 
+              
+            } 
+        });
 
-        let success_response = ({ message: "this is you automated password please change it to a secured one",  status: true , data: {temp_pass}})
+       
+
+        let success_response = ({ message: "this is you automated password please change it to a secured one",  status: true , data: {temp_pass2}})
         res.status(200).send(success_response)
     }catch (e){
         let err_response = ({ message : { error : "invalid email"} ,status: false},{   data : ""})
