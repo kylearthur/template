@@ -6,7 +6,7 @@ const Coins = require('../models/cash')
 const nodemailer = require("nodemailer");
 const auth = require('../middleware/auth')
 const { off } = require('../models/user')
-const path = require('path')
+const fs = require('fs')
 const router = new express.Router()
 
 
@@ -69,13 +69,15 @@ router.post('/register', async (req, res) => {
         },
       });
     
+      const template = fs.readFileSync("./emailtemp/index.html")
+
       // send mail with defined transport object
       let info = await transporter.sendMail({
         from: '"happymed" <no-reply@happymedadmin.com>', // sender address
         to: user.email, // list of receivers
         subject: "HAPPYMED", // Subject line
         text: "thanks for joining in", // plain text body
-        html: "path.join(__dirname , '../emailtemp/index')"
+        html: template
        
       });
 
