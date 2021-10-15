@@ -14,32 +14,16 @@ const mongoose = require('mongoose')
 //     console.log("Not Connected to Database ERROR! ", err);
 // });
 
-// const url = 'mongodb://localhost/testdb'
+const url = 'mongodb://localhost/testdb'
 
-// mongoose.connect(
-//     url,
-//     { useNewUrlParser: true, useUnifiedTopology: true },
-//     function (err, res) {
-//         try {
-//             console.log('Connected to Database');
-//         } catch (err) {
-//             throw err;
-//         }
-//     })
+mongoose.connect(
+    url,
+    { useNewUrlParser: true, useUnifiedTopology: true },
+    function (err, res) {
+        try {
+            console.log('Connected to Database');
+        } catch (err) {
+            throw err;
+        }
+    })
 
-// mongoose.connect('mongodb://localhost:27017/test').catch();
-
-const start = async () => {
-    try {
-        await mongoose.connect('mongodb://localhost:27017/test', {
-            useNewUrlParser: true,
-            useUnifiedTopology: true
-        });
-        console.log('Server connected to MongoDb!');
-    } catch (err) {
-       
-        console.error(err);
-    }
-};
-
-start();
