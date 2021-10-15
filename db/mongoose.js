@@ -6,7 +6,8 @@ const mongoose = require('mongoose')
 //     useFindAndModify: false,
 //     useUnifiedTopology: true
 // })
-mongoose.connect('mongodb://localhost/testdb').then(() => {
+await mongoose.connect('mongodb://localhost/testdb')
+.then(() => {
 console.log("Connected to Database");
 }).catch((err) => {
     console.log("Not Connected to Database ERROR! ", err);
