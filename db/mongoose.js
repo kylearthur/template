@@ -30,10 +30,6 @@ const mongoose = require('mongoose')
 // mongoose.connect('mongodb://localhost:27017/test').catch();
 
 const start = async () => {
-    
-    if (!process.env.DB_URI) {
-        throw new Error('auth DB_URI must be defined');
-    }
     try {
         await mongoose.connect('mongodb://localhost:27017/test', {
             useNewUrlParser: true,
@@ -42,14 +38,9 @@ const start = async () => {
         });
         console.log('Server connected to MongoDb!');
     } catch (err) {
-        throw new DbConnectionError();
+       
         console.error(err);
     }
-
-    const PORT = process.env.SERVER_PORT;
-    app.listen(PORT, () => {
-        console.log(`Server is listening on ${PORT}!!!!!!!!!`);
-    });
 };
 
 start();
