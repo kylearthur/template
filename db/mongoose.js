@@ -42,10 +42,10 @@ const url = 'mongodb://localhost/testdb'
 }
 module.exports = connectDB;
 
-
 connectDB()
     .then(() => {
         app.listen(Port, console.log(`listening on port :${Port}` .red.underline.bold));
     }).catch((e) => {
         console.log(e);
     })
+

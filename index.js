@@ -44,9 +44,9 @@ app.post('/subscribe',(req,res)=>{
 
 
 
-// app.listen(port, () => {
-//     console.log('Server is up on port ' + port)
-// })
+app.listen(port, () => {
+    console.log('Server is up on port ' + port)
+})
 
 
 connectDB()
