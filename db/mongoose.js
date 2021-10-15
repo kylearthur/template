@@ -14,7 +14,7 @@ const mongoose = require('mongoose')
 //     console.log("Not Connected to Database ERROR! ", err);
 // });
 
-const url = 'mongodb://localhost:127.0.0.1:27017/testdb'
+const url = 'mongodb://localhost:27017/testdb'
 const start = async () => {
     try {
       await  mongoose.connect(
