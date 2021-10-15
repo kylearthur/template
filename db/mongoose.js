@@ -27,3 +27,17 @@ mongoose.connect(
         }
     })
 
+
+
+    const connectDB = async () =>{
+        const conn = await new mongoose(
+            url,
+        {
+            usenewurlparser:true,
+            usecreateindex:true,
+            usefindmodify:true,
+            useunifiedtropology:true,
+            urlencoded:true
+        })
+}
+module.exports = connectDB;
