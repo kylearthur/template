@@ -15,15 +15,16 @@ const mongoose = require('mongoose')
 // });
 
 const url = 'mongodb://localhost/testdb'
+const start = async () => {
+    try {
+      await  mongoose.connect(
+            url,
+            { useNewUrlParser: true, useUnifiedTopology: true },
+           )
+    }catch (err){
+        console.error(err);
+    }
+}
 
-mongoose.connect(
-    url,
-    { useNewUrlParser: true, useUnifiedTopology: true },
-    function (err, res) {
-        try {
-            console.log('Connected to Database');
-        } catch (err) {
-            throw err;
-        }
-    })
+start();
 
