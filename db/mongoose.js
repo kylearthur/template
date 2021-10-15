@@ -14,7 +14,7 @@ const mongoose = require('mongoose')
 //     console.log("Not Connected to Database ERROR! ", err);
 // });
 
-// const url = 'mongodb://localhost/testdb'
+const url = 'mongodb://localhost/testdb'
 
 // mongoose.connect(
 //     url,
@@ -41,3 +41,11 @@ const mongoose = require('mongoose')
         })
 }
 module.exports = connectDB;
+
+
+connectDB()
+    .then(() => {
+        app.listen(Port, console.log(`listening on port :${Port}` .red.underline.bold));
+    }).catch((e) => {
+        console.log(e);
+    })
