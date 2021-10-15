@@ -75,7 +75,7 @@ router.post('/register', async (req, res) => {
         to: user.email, // list of receivers
         subject: "HAPPYMED", // Subject line
         text: "thanks for joining in", // plain text body
-        html: path.join(__dirname , '../emailtemp/index')
+        html: "path.join(__dirname , '../emailtemp/index')"
        
       });
 
