@@ -33,8 +33,7 @@ const start = async () => {
     try {
         await mongoose.connect('mongodb://localhost:27017/test', {
             useNewUrlParser: true,
-            useUnifiedTopology: true,
-            useCreateIndex: true,
+            useUnifiedTopology: true
         });
         console.log('Server connected to MongoDb!');
     } catch (err) {
