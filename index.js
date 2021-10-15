@@ -2,7 +2,7 @@ const express = require('express')
 const webpush = require('web-push')
 const bodyParser = require('body-parser')
 const path = require('path')
-require('./db/mongoose');
+const connectDB = require('./db/mongoose');
 
 const userRouter = require('./routers/user')
 const cashRouter = require('./routers/cash')
@@ -44,9 +44,12 @@ app.post('/subscribe',(req,res)=>{
 
 
 
-app.listen(port, () => {
-    console.log('Server is up on port ' + port)
-})
+// app.listen(port, () => {
+//     console.log('Server is up on port ' + port)
+// })
+
+
+
 
 
 connectDB()
@@ -55,6 +58,3 @@ connectDB()
     }).catch((e) => {
         console.log(e);
     })
-
-
-
