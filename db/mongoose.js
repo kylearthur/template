@@ -27,4 +27,4 @@ const mongoose = require('mongoose')
 //         }
 //     })
 
-mongoose.connect('mongodb://localhost:27017/test').catch(err);
+mongoose.connect('mongodb://localhost:27017/test').catch(e);
