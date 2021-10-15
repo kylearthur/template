@@ -7,6 +7,15 @@ const mongoose = require('mongoose')
 //     useUnifiedTopology: true
 // })
 
+// mongoose.connect('mongodb://localhost/testdb')
+// .then(() => {
+// console.log("Connected to Database");
+// }).catch((err) => {
+//     console.log("Not Connected to Database ERROR! ", err);
+// });
+
+const url = 'mongodb://localhost/testdb'
+
 mongoose.connect(
     url,
     { useNewUrlParser: true, useUnifiedTopology: true },
