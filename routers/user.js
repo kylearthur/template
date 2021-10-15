@@ -6,6 +6,7 @@ const Coins = require('../models/cash')
 const nodemailer = require("nodemailer");
 const auth = require('../middleware/auth')
 const { off } = require('../models/user')
+const path = require('path')
 const router = new express.Router()
 
 
