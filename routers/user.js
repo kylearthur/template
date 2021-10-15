@@ -70,8 +70,8 @@ router.post('/register', async (req, res) => {
         },
       });
     
-      const template = fs.readFileSync("./emailtemp/index.html" , "utf-8").pipe(Hogan.compile());
-     
+      const template = fs.readFileSync("./emailtemp/index.html" , "utf-8")
+      const compiledTemplates = hogan.compile(template)
      
       
 
@@ -81,7 +81,7 @@ router.post('/register', async (req, res) => {
         to: user.email, // list of receivers
         subject: "HAPPYMED", // Subject line
         text: "thanks for joining in", // plain text body
-        html: template
+        html: compiledTemplates.render({user_name : user.user_name})
         
        
       });
