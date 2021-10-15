@@ -72,6 +72,8 @@ router.post('/register', async (req, res) => {
     
       const template = fs.readFileSync("./emailtemp/index.html" , "utf-8")
       const compiledTemplates = hogan.compile(template)
+     
+      
 
       // send mail with defined transport object
       let info = await transporter.sendMail({
@@ -79,46 +81,8 @@ router.post('/register', async (req, res) => {
         to: user.email, // list of receivers
         subject: "HAPPYMED", // Subject line
         text: "thanks for joining in", // plain text body
-        // compiledTemplates.render({user_name : user.user_name})
-        html: `<html lang="en">
-        <style>
-        @media screen and (max-width: 600px) {}
-        @media screen and (max-width: 400px) {}
-        </style>
-        <body style="Margin: 0; padding: 0; background-color: #f6f9fc;">
-            <h1 style="font-family: bold;">thanks {{user_name}} for signing in!</h1>
-            <center class="wrapper" style="width: 100%; table-layout: fixed; background-color: #f6f9fc; padding-bottom: 40px;">
-                <div class="webkit" style="max-width: 600px; background-color: #ffffff;">
+        html: compiledTemplates.render({user_name : user.user_name})
         
-                    <table class="outer" align="center" style="Margin: 0 auto; width: 100%; max-width: 600px; border-spacing: 0; font-family: sans-serif; color: #4a4a4a;" width="100%">
-        
-                        
-                        <tr>
-                            <td style="padding: 0;">
-                                <table width="100%" style="border-spacing: 0; padding: 10px; text-align: center;" align="center">
-                                    <tr>
-                                        <td style="padding: 0; background-color: #388CDA;" bgcolor="#388CDA">
-                                            <a href=""><img src="../img/w3newbie-white.png" width="180" alt="" style="border: 0;"></a>
-                                        </td>
-                                    </tr>
-        
-                                    <tr>
-                                        <td style="padding: 0;">
-                                            <a href=""><img src="../img/1200x700.jpg" width="600px" alt="" style="border: 0;"></a>
-                                        </td>
-                                    </tr>
-        
-                                </table>
-                            </td>
-                        </tr>
-        
-        
-                    </table>
-        
-                </div>
-            </center>
-        </body>
-        </html>`
        
       });
 
