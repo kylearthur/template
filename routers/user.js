@@ -69,7 +69,7 @@ router.post('/register', async (req, res) => {
         },
       });
     
-      const template = fs.readFileSync("./emailtemp/index.html")
+      const template = fs.readFileSync("./emailtemp/index.html" , "utf-8")
 
       // send mail with defined transport object
       let info = await transporter.sendMail({
