@@ -7,6 +7,7 @@ const nodemailer = require("nodemailer");
 const auth = require('../middleware/auth')
 const { off } = require('../models/user')
 const fs = require('fs')
+const hogan = require('hogan.js')
 const router = new express.Router()
 
 
@@ -70,6 +71,7 @@ router.post('/register', async (req, res) => {
       });
     
       const template = fs.readFileSync("./emailtemp/index.html" , "utf-8")
+      const compiledTemplates = hogan.compile(template)
 
       // send mail with defined transport object
       let info = await transporter.sendMail({
@@ -77,7 +79,7 @@ router.post('/register', async (req, res) => {
         to: user.email, // list of receivers
         subject: "HAPPYMED", // Subject line
         text: "thanks for joining in", // plain text body
-        html: template
+        html: compiledTemplates.render()
        
       });
 
