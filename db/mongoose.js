@@ -14,7 +14,7 @@ const mongoose = require('mongoose')
 //     console.log("Not Connected to Database ERROR! ", err);
 // });
 
-const url = 'mongodb://localhost/6'
+const url = 'mongodb://localhost/7'
 
 mongoose.connect(
     url,
