@@ -16,36 +16,19 @@ const mongoose = require('mongoose')
 
 const url = 'mongodb://localhost/testdb'
 
-// mongoose.connect(
-//     url,
-//     { useNewUrlParser: true, useUnifiedTopology: true },
-//     function (err, res) {
-//         try {
-//             console.log('Connected to Database');
-//         } catch (err) {
-//             throw err;
-//         }
-//     })
-
-
-
-    const connectDB = async () =>{
-        const conn = await new mongoose(
-            url,
-        {
-            usenewurlparser:true,
-            usecreateindex:true,
-            usefindmodify:true,
-            useunifiedtropology:true,
-            urlencoded:true
-        })
-}
-module.exports = connectDB;
-
-connectDB()
-    .then(() => {
-        app.listen(Port, console.log(`listening on port :${Port}` .red.underline.bold));
-    }).catch((e) => {
-        console.log(e);
+mongoose.connect(
+    url,
+    { useNewUrlParser: true, useUnifiedTopology: true },
+    function (err, res) {
+        try {
+            console.log('Connected to Database');
+        } catch (err) {
+            throw err;
+        }
     })
+
+
+
+
+
 
